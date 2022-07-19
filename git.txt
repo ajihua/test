@@ -1,0 +1,86 @@
+git init 初始化一个仓库 必须在要初始化的文件夹下
+git status 查看git仓库状态
+git add 文件或者目录  添加至缓冲区
+git commit -m "提交描述" 提交至仓库
+git log 查看所有commit信息
+git branch 查看当前分支
+git branch name(自定义)表示创建一个分支为name
+git checkout 分支name  表示切换到哪个分支
+git checkout -b name(自定义) 创建一个name名字分支并切换
+git merge name(分支name)合并到主分支 先切换到主分支在做合并操作
+git branch -d/-D name(分支name) -d表示没合并到主分支会删除失败 -D强制删除
+git tag 版本号  为当前代码添加版本号，不加版本号表示显示有多少个tag信息
+git checkout v1.0  切换到该版本
+git push origin master 本地代码push到远程仓库
+git pull origin master 拉取远程代码到本地仓库
+git clone git@github.com:ajihua/oschina.git 通俗来说复制github仓库到本地 ajihua github用户名 
+
+git remote -v 查看有哪些远程仓库
+
+关联本地已有项目 如果我们本地已经有一个完整的 git 仓库，并且已经进行了很多次 commit ，这个时候第一种方法就不适合了。 假设我们本地有个 test2 的项目，我们需要的是在 GitHub 上建一个 test 的项目，然后把本地 test2 上的所有代码 commit 记录提交到 GitHub 上的 test 项目。 
+第一步就是在 GitHub 上建一个 test 项目，这个想必大家都会了，就不用多讲了。 
+第二步把本地 test2 项目与 GitHub 上的 test 项目进行关联，切换到 test2 目录，执行如下命令：
+git remote add origin git@github.com:ajihua/test.git 
+什么意思呢？就是添加一个远程仓库，他的地址是 git@github.com:stormzhang/test.git ， 而 origin 是给这个项目的远程仓库起的名字，是的，名字你可以随便取，只不过大家公认的 只有一个远程仓库时名字就是 origin ，为什么要给远程仓库取名字？因为我们可能一个项目 有多个远程仓库？比如 GitHub 一个，比如公司一个，这样的话提交到不同的远程仓库就需要 指定不同的仓库名字了。
+接下来，我们本地的仓库就可以向远程仓库进行代码提交了
+git push origin master
+
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)% d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+设置git log的别名 并修改显示的样子  git lg
+
+git config --global core.editor "vim" 这只编辑器
+git config --global color.ui true 开启git着色
+
+
+git diff <$id1> <$id2> # 比较两次提交之间的差异 <>要去掉 三条语句都是具体执行的时候 $id1 表示commit id  要查询
+git diff <branch1>..<branch2> # 在两个分支之间比较 
+git diff --staged # 比较暂存区和版本库差异
+
+git checkout a.md 撤销a.md文件  前提是还没有add
+
+git checkout v1.0 切换到代码修改的版本
+git checkout ffd9f2dd68f1eb21d36cee50dbdd504e95d9c8f7 # 后面的一长串是commit_id，是每次com mit的SHA1值，可以根据 git log 看到。 切换到某次commit
+
+设想一个场景，假设我们正在一个新的分支做新的功能，这个时候突然有一个紧急的bug需要 修复，而且修复完之后需要立即发布。当然你说我先把刚写的一点代码进行提交不就行了 么？这样理论上当然是ok的，但是这会产品垃圾commit，原则上我们每次的commit都要有实 际的意义，你的代码只是刚写了一半，还没有什么实际的意义是不建议就这样commit的，那 么有没有一种比较好的办法，可以让我暂时切到别的分支，修复完bug再切回来，而且代码也 能保留的呢？
+
+git stash 表示把还没有commit的 暂存起来
+之后可以切换分支了
+git stash list 查看所有 stash 记录
+git stash apply 还原数据
+git stash drop 删除stash记录
+
+git stash pop 还原数据并删除stash记录
+
+
+git stash clear 清空stash记录
+
+git checkout master 
+git merge featureA == git rebase featureA 相同作用  区别就是 前一没有逻辑顺序但是知道合并的代码是从哪来的  第二个相当于排序了 看起来更有逻辑了  但缺点是不知道代码从哪来的
+上2句 表示把分featureA和合并到master
+
+
+分支常用操作
+
+新建一个叫 develop 的分支 
+git branch develop 注意新建实在当前分支的基础上
+
+切换到 develop 分支 
+git checkout develop
+
+git checkout -b develop 新建并切换分支
+
+把 develop 分支推送到远程仓库
+git push origin develop
+
+git branch 查看本地分支列表
+git branch -r 查看远程分支列表
+
+git push origin :develop 删除远程分支名字为develop 的分支
+
+如果远程分支有个 develop ，而本地没有，你想把远程的 develop 分支迁到本地： 
+git checkout develop origin/develop
+
+同样的把远程分支迁到本地顺便切换到该分支： 
+git checkout -b develop origin/develop
+
+gitflow 分支工具
